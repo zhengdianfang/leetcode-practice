@@ -1,12 +1,13 @@
 package com.zhengdianfang.array;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class LeetCodeArray {
     public static void main(String[] args) {
-        int[] nums = {2, 4, 2, 4, 1};
-        System.out.println(singleNumber(nums));
+        int[] nums = {2, 4, 3, 4, 1};
+        for (int i : twoSum(nums, 6)) {
+            System.out.println(i);
+        }
     }
 
     /**
@@ -124,6 +125,27 @@ public class LeetCodeArray {
             System.out.println("single:" + single);
         }
         return single;
+    }
+
+    /**
+     * 两数之和
+     * 给定一个整数数组 nums和一个整数目标值 target，请你在该数组中找出 和为目标值 target 的那两个整数，并返回它们的数组下标。
+     * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+     * 你可以按任意顺序返回答案。
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if(integerIntegerHashMap.containsKey(target - nums[i])) {
+              return new int[] {integerIntegerHashMap.get(target - nums[i]), i};
+            }
+            integerIntegerHashMap.put(nums[i], i);
+        }
+        return new int[]{};
     }
 }
 
