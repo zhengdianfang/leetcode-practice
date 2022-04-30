@@ -7,7 +7,7 @@ import java.util.Map;
 public class LeetCodeString {
     public static void main(String[] args) {
         LeetCodeString leetCodeString = new LeetCodeString();
-        System.out.println(leetCodeString.strStr("aaa", "aaa"));
+        System.out.println(leetCodeString.longestCommonPrefix(new String[]{"leets", "leetcode", "leet", "leeds"}));
     }
 
     public int getMaxLengthForNoRepeatWords(String s) {
@@ -215,5 +215,63 @@ public class LeetCodeString {
             }
         }
         return -1;
+    }
+
+    /**
+     * 外观数列
+     * 1.     1
+     * 2.     11
+     * 3.     21
+     * 4.     1211
+     * 5.     111221
+     * 第一项是数字 1
+     * 描述前一项，这个数是 1 即 “ 一 个 1 ”，记作 "11"
+     * 描述前一项，这个数是 11 即 “ 二 个 1 ” ，记作 "21"
+     * 描述前一项，这个数是 21 即 “ 一 个 2 + 一 个 1 ” ，记作 "1211"
+     * 描述前一项，这个数是 1211 即 “ 一 个 1 + 一 个 2 + 二 个 1 ” ，记作 "111221"
+     *
+     * @param n
+     * @return
+     */
+    public String countAndSay(int n) {
+        String str = "1";
+        for (int i = 2; i <= n; ++i) {
+            StringBuilder sb = new StringBuilder();
+            int start = 0;
+            int pos = 0;
+
+            while (pos < str.length()) {
+                while (pos < str.length() && str.charAt(pos) == str.charAt(start)) {
+                    pos++;
+                }
+                sb.append(pos - start).append(str.charAt(start));
+                start = pos;
+            }
+            str = sb.toString();
+        }
+
+        return str;
+    }
+
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        int minLength = Integer.MAX_VALUE;
+        for (String str : strs) {
+            minLength = Math.min(minLength, str.length());
+        }
+        for (int i = 0; i < minLength; i++) {
+            char character = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (character != strs[j].charAt(i)) {
+                    return stringBuilder.toString();
+                }
+            }
+            stringBuilder.append(character);
+        }
+        return stringBuilder.toString();
     }
 }
